@@ -1,13 +1,18 @@
-import {React, useState} from 'react';
+import {React, useState, useRef} from 'react';
 import ReactDOM from "react-dom";
+import useOutsideClick from './useOutsideClick';
 
 export default function Modal(props){
-    const [isOpen] = useState(true);
+    const [isOpen, setOpen] = useState(true);
+    const ref = useRef();
+  useOutsideClick(ref, () => {
+    setOpen(false);
+  });
     if(!isOpen) return null;
     return ReactDOM.createPortal(
         <>
         <div className="modalWindow">
-            <div className="modalOuter">
+            <div ref={ref} className="modalOuter">
                 <div className="modalContent">
                 <div className="modalTitle">
                 <h4>Modal heading</h4>
